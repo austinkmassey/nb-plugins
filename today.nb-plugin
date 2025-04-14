@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+###############################################################################
+# today.nb-plugin
+#
+# Opens or creates today's note.
+#
+# Author: austinkmassey (https://github.com/austinkmassey)
+#
+# A plugin for `nb`.
+#   https://github.com/xwmx/nb
+###############################################################################
+
+# Add the new subcommand names with `_subcommands add <name>`.
+_subcommands add "today"
+
+# Define help and usage text with `_describe_<subcommand>()` and point aliases at the same.
+_subcommands describe "today" <<HEREDOC
+Usage: nb today
+
+Open or create today's journal note.
+
+The note is tagged with:
+  - #journal
+  - #YYYY-MM-DD (today's date)
+
+If the note already exists, it will be opened.
+If it does not exist, a new note will be created.
+HEREDOC
+
+# Define the subcommand as a function
+_today() {
+  local format="%F"
+  local date_format="$(date +"${format}")"
+  local search_result="$(_search -t journal -t "${date_format}" --path)"
+  echo $format
+  echo $date_format
+  echo $search_result
+  if [[ -f "${search_result}" ]]; then
+    _edit "${search_result}"
+  else
+    _add --title "Journal - ${date_format}" --tag journal --tag "${date_format}"
+  fi
+}
