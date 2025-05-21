@@ -12,7 +12,8 @@ nb plugin install https://github.com/austinkmassey/nb-today.nb/blob/main/today.n
 
 ## 🛠️ Requirements
 
-    nb installed and configured.
+    - nb installed and configured
+    - awk (for task-count)
 
 ## **today** - Daily journal plugin for nb
 
@@ -48,9 +49,24 @@ and titled:
 # Journal - 2025-04-14
 ```
 
-### 📋 Example
+## **dash** - dashboard for tasks and other items
+
+**dash** summarizes usage and object count data to give an overview of notes
+
+When called, it presents a text based description of measurements it takes of notes.
+
+### 🚀 Usage
 
 ```
-$ nb today
-# (opens today's journal note, creating it if needed)
+nb dash
 ```
+
+Returns a count of open and completed tasks for each directory/notebook in nb.
+
+```
+Directory                                 Completed  Incomplete
+./projects/notes                              12         3
+./projects/todo                               8          5
+```
+
+Dash does not count tasks from local notebooks.

@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+###############################################################################
+# task-count.nb-plugin
+#
+# Counts [x] completed and [ ] incomplete tasks across notes.
+# Groups results by directory.
+#
+# Author: austinkmassey (https://github.com/austinkmassey)
+#
+# A plugin for `nb`.
+#   https://github.com/xwmx/nb
+###############################################################################
+
+# Add the new subcommand
+_subcommands add "task-count"
+
+# Describe the plugin
+_subcommands describe "task-count" <<HEREDOC
+Usage: nb task-count
+
+Count [x] completed and [ ] incomplete tasks across all notes.
+Displays results grouped by directory.
+HEREDOC
+
+# Define the command
+_task_count() {
+  # Get all note paths
+  _notebook_paths | while read -r file; do
+    [[ -f "$file" ]] || continue
+    dir=$(dirname "$file")
+    completed=$(grep -o "\[x\]" "$file" | wc -l)
+    incomplete=$(grep -o "\[ \]" "$file" | wc -l)
+    echo "$dir|$completed|$incomplete"
+  done | awk -F'|' '
+  {
+    completed[$1] += $2
+    incomplete[$1] += $3
+  }
+  END {
+    printf "%-40s %10s %10s\n", "Directory", "Completed", "Incomplete"
+    for (d in completed) {
+      printf "%-40s %10d %10d\n", d, completed[d], incomplete[d]
+    }
+  }'
+}
