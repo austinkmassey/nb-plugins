@@ -1,23 +1,32 @@
-# nb-today
+# nb-plugins
 
-Daily journal plugin for nb
+A collection of plugins that can be used with the note taking tool nb.
 
-nb-today is a simple plugin that helps you create and manage daily journal notes with nb.
+## 📦 Installation
+
+Plugins can be installed independently.
+
+```
+nb plugin install https://github.com/austinkmassey/nb-today.nb/blob/main/today.nb-plugin
+```
+
+## 🛠️ Requirements
+
+    nb installed and configured.
+
+## **today** - Daily journal plugin for nb
+
+**today** is a simple plugin that helps you create and manage daily journal notes with nb.
 
 It opens today's journal note if it exists, or creates a new one tagged with:
+
+**task-count** - a task counter for
 
 ```
 #journal #YYYY-MM-DD (today’s date)
 ```
 
-## 📦 Installation
-
-```
-nb plugin install https://github.com/austinkmassey/nb-today.nb/blob/main/today.nb-plugin
-
-```
-
-## 🚀 Usage
+### 🚀 Usage
 
 ```
 nb today
@@ -39,13 +48,9 @@ and titled:
 # Journal - 2025-04-14
 ```
 
-## 📋 Example
+### 📋 Example
 
 ```
 $ nb today
 # (opens today's journal note, creating it if needed)
 ```
-
-## 🛠️ Requirements
-
-    nb installed and configured.
