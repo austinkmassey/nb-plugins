@@ -7,7 +7,11 @@ A collection of plugins that can be used with the note taking tool nb.
 Plugins can be installed independently.
 
 ```
+#Install today
 nb plugin install https://github.com/austinkmassey/nb-today.nb/blob/main/today.nb-plugin
+
+#Install dash
+nb plugin install https://github.com/austinkmassey/nb-today.nb/blob/main/dash.nb-plugin
 ```
 
 ## 🛠️ Requirements

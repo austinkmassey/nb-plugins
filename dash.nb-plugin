@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ###############################################################################
-# task-count.nb-plugin
+# dash.nb-plugin
 #
 # Counts [x] completed and [ ] incomplete tasks across notes.
 # Groups results by directory.
@@ -12,11 +12,11 @@
 ###############################################################################
 
 # Add the new subcommand
-_subcommands add "task-count"
+_subcommands add "dash"
 
 # Describe the plugin
-_subcommands describe "task-count" <<HEREDOC
-Usage: nb task-count
+_subcommands describe "dash" <<HEREDOC
+Usage: nb dash
 
 Count [x] completed and [ ] incomplete tasks across all notes.
 Displays results grouped by directory.
