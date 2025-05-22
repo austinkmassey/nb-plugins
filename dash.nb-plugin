@@ -2,7 +2,7 @@
 ###############################################################################
 # dash.nb-plugin
 #
-# Counts [x] completed and [ ] incomplete tasks across notes.
+# Counts [x] completed and [ ] incomplete tasks across notes in the current notebook.
 # Groups results by directory.
 #
 # Author: austinkmassey (https://github.com/austinkmassey)
@@ -22,16 +22,37 @@ Count [x] completed and [ ] incomplete tasks across all notes.
 Displays results grouped by directory.
 HEREDOC
 
-# Define the command
-_task_count() {
-  # Get all note paths
-  _notebook_paths | while read -r file; do
+_dash() {
+  search_dir=$(_notebooks current --path)
+
+  # Read results of `find` into an array
+  mapfile -t files < <(find "$search_dir" -type f -name "*.todo.md")
+
+  results=""
+
+  echo "Found ${#files[@]} todo.md files" >&2
+
+  for file in "${files[@]}"; do
     [[ -f "$file" ]] || continue
     dir=$(dirname "$file")
-    completed=$(grep -o "\[x\]" "$file" | wc -l)
-    incomplete=$(grep -o "\[ \]" "$file" | wc -l)
-    echo "$dir|$completed|$incomplete"
-  done | awk -F'|' '
+    #completed=$(grep -o "\[x\]" "$file" 2>/dev/null | wc -l || echo 0)
+    if matches=$(grep -s -o "\[x\]" "$file" 2>/dev/null); then
+      completed=$(wc -l <<<"$matches")
+    else
+      completed=0
+    fi
+
+    #incomplete=$(grep -o "\[ \]" "$file" 2>/dev/null | wc -l || echo 0)
+    if matches=$(grep -s -o "\[ \]" "$file" 2>/dev/null); then
+      incomplete=$(wc -l <<<"$matches")
+    else
+      incomplete=0
+    fi
+    results+="$dir|$completed|$incomplete"$'\n'
+  done
+
+  # Pipe the result block to awk
+  printf "%s" "$results" | awk -F'|' '
   {
     completed[$1] += $2
     incomplete[$1] += $3

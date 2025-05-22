@@ -65,12 +65,10 @@ When called, it presents a text based description of measurements it takes of no
 nb dash
 ```
 
-Returns a count of open and completed tasks for each directory/notebook in nb.
+Returns a count of open and completed tasks for each directory in the current notebook.
 
 ```
 Directory                                 Completed  Incomplete
 ./projects/notes                              12         3
 ./projects/todo                               8          5
 ```
-
-Dash does not count tasks from local notebooks.
